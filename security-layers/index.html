@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Layer Visualization - AnyBank Security</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+    <div class="learning-container">
+        <header class="anybank-header">
+            <img src="assets/anybank-icon.svg" alt="AnyBank" class="logo">
+            <div>
+                <h1 class="title">AnyBank Security Layers</h1>
+                <p class="subtitle">Interactive Android Security Foundation</p>
+            </div>
+        </header>
+        
+        <main class="interaction-content">
+            <!-- Welcome/Instructions Panel (Left) -->
+            <div class="instruction-panel">
+                <div class="instruction-header">
+                    <h3 class="instruction-title">Welcome to AnyBank Security - UPDATED</h3>
+                    <div class="instruction-controls">
+                        <button class="help-toggle-btn" id="help-toggle-btn" aria-label="Toggle detailed guidance">
+                            <span class="help-icon">💡</span>
+                            <span class="help-text">Show Guide</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="instruction-content">
+                    <p class="instruction-description">Explore how Android's layered security protects your banking app. Click the Secure Login button to begin your authentic banking experience.</p>
+                    <div class="instruction-details">
+                        <h4>Android Security Foundation:</h4>
+                        <ul>
+                            <li>Four distinct security layers protect every banking operation</li>
+                            <li>Each layer provides specific protection mechanisms</li>
+                            <li>Layers work together to create defense in depth</li>
+                            <li>AnyBank leverages all layers for maximum security</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-guidance">
+                        <p><strong>What to do:</strong> Click Secure Login to authenticate, then explore banking functions from the dashboard, or use the Next button to continue the guided tour.</p>
+                    </div>
+                    
+                    <!-- Enhanced Help Content (Initially Hidden) -->
+                    <div class="detailed-help-content" id="detailed-help-content">
+                        <div class="help-section">
+                            <h4>🎯 How to Interact</h4>
+                            <ul>
+                                <li>Start with Secure Login to authenticate and access your account</li>
+                                <li>After login, use dashboard actions (Check Balance, Transfer, History) to see security layers</li>
+                                <li>Click on active security layer icons (🛡️ 🔐 ⚡ 📱) to learn about their mechanisms</li>
+                                <li>Watch the right panel to see which layers are active</li>
+                            </ul>
+                        </div>
+                        <div class="help-section">
+                            <h4>🔍 What You'll Learn</h4>
+                            <ul>
+                                <li><strong>Kernel Security:</strong> Process isolation and access controls</li>
+                                <li><strong>Hardware Security:</strong> Biometric and cryptographic protection</li>
+                                <li><strong>Runtime Security:</strong> Memory protection and code integrity</li>
+                                <li><strong>App Security:</strong> Data encryption and secure storage</li>
+                            </ul>
+                        </div>
+                        <div class="help-section">
+                            <h4>💡 Tips for Best Experience</h4>
+                            <ul>
+                                <li>Start with "Secure Login" to authenticate like a real banking app</li>
+                                <li>After login, try different banking actions from the dashboard</li>
+                                <li>Watch security layers reset and activate for each screen</li>
+                                <li>Click on highlighted layer icons for detailed mechanism explanations</li>
+                                <li>Use the guided tour for structured learning progression</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Phone Device (Center) -->
+            <div class="phone-device">
+                <div class="phone-frame">
+                    <div class="phone-screen">
+                        <div class="status-bar">
+                            <span class="time">9:41</span>
+                            <div class="status-icons">
+                                <span>📶 🔋</span>
+                            </div>
+                        </div>
+                        <div class="app-content">
+                            <!-- AnyBank app content -->
+                            <div class="banking-app-content">
+                                <!-- Welcome Screen -->
+                                <div class="app-screen active" id="welcome-screen">
+                                    <div class="app-header">
+                                        <img src="assets/anybank-icon.svg" alt="AnyBank" class="app-logo">
+                                        <h2 class="app-title">AnyBank Mobile</h2>
+                                    </div>
+                                    <div class="app-body">
+                                        <div class="welcome-message">
+                                            <h3>Welcome to Secure Banking</h3>
+                                            <p>Experience Android's layered security in action</p>
+                                        </div>
+                                        <div class="action-buttons">
+                                            <button class="banking-action-btn primary" data-action="login" data-layers="kernel,hal,runtime,app" data-screen="login-screen">
+                                                <span class="btn-icon">🔐</span>
+                                                <span class="btn-text">Secure Login</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Login Screen -->
+                                <div class="app-screen" id="login-screen">
+                                    <div class="app-header">
+                                        <button class="back-btn" data-target="welcome-screen">← Back</button>
+                                        <h2 class="app-title">Secure Login</h2>
+                                    </div>
+                                    <div class="app-body">
+                                        <div class="login-form">
+                                            <div class="security-indicator">
+                                                <span class="security-icon">🛡️</span>
+                                                <span class="security-text">Multi-layer security active</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="username">Username</label>
+                                                <input type="text" id="username" placeholder="Enter username" readonly value="demo_user">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="password">Password</label>
+                                                <input type="password" id="password" placeholder="Enter password" readonly value="••••••••">
+                                            </div>
+                                            <div class="authentication-options">
+                                                <button class="auth-option-btn" data-action="biometric" data-screen="dashboard-screen">
+                                                    <span class="btn-icon">👆</span>
+                                                    <span class="btn-text">Use Fingerprint</span>
+                                                </button>
+                                                <div class="auth-divider">
+                                                    <span class="divider-text">OR</span>
+                                                </div>
+                                                <button class="auth-option-btn" data-action="authenticate" data-screen="dashboard-screen">
+                                                    <span class="btn-icon">🔑</span>
+                                                    <span class="btn-text">Use Login/Password</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dashboard Screen -->
+                                <div class="app-screen" id="dashboard-screen">
+                                    <div class="app-header">
+                                        <img src="assets/anybank-icon.svg" alt="AnyBank" class="app-logo">
+                                        <h2 class="app-title">Dashboard</h2>
+                                        <button class="logout-btn" data-target="welcome-screen">Logout</button>
+                                    </div>
+                                    <div class="app-body">
+                                        <div class="account-summary">
+                                            <div class="balance-card">
+                                                <h3>Account Balance</h3>
+                                                <div class="balance-amount">$12,345.67</div>
+                                                <div class="balance-subtitle">Available Balance</div>
+                                            </div>
+                                        </div>
+                                        <div class="quick-actions">
+                                            <button class="quick-action-btn" data-action="balance" data-screen="balance-screen">
+                                                <span class="btn-icon">💰</span>
+                                                <span class="btn-text">View Details</span>
+                                            </button>
+                                            <button class="quick-action-btn" data-action="transfer" data-screen="transfer-screen">
+                                                <span class="btn-icon">💸</span>
+                                                <span class="btn-text">Transfer</span>
+                                            </button>
+                                            <button class="quick-action-btn" data-action="history" data-screen="history-screen">
+                                                <span class="btn-icon">📊</span>
+                                                <span class="btn-text">History</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Balance Screen -->
+                                <div class="app-screen" id="balance-screen">
+                                    <div class="app-header">
+                                        <button class="back-btn" data-target="dashboard-screen">← Back</button>
+                                        <h2 class="app-title">Account Balance</h2>
+                                    </div>
+                                    <div class="app-body">
+                                        <div class="balance-details">
+                                            <div class="balance-card primary">
+                                                <h3>Checking Account</h3>
+                                                <div class="balance-amount">$12,345.67</div>
+                                                <div class="account-number">****1234</div>
+                                            </div>
+                                            <div class="balance-card">
+                                                <h3>Savings Account</h3>
+                                                <div class="balance-amount">$8,901.23</div>
+                                                <div class="account-number">****5678</div>
+                                            </div>
+                                        </div>
+                                        <div class="security-notice">
+                                            <span class="security-icon">🔒</span>
+                                            <span class="security-text">Data encrypted and protected by Android security layers</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Transfer Screen -->
+                                <div class="app-screen" id="transfer-screen">
+                                    <div class="app-header">
+                                        <button class="back-btn" data-target="dashboard-screen">← Back</button>
+                                        <h2 class="app-title">Transfer Funds</h2>
+                                    </div>
+                                    <div class="app-body">
+                                        <div class="transfer-form">
+                                            <div class="form-group">
+                                                <label for="from-account">From Account</label>
+                                                <select id="from-account" disabled>
+                                                    <option>Checking ****1234 ($12,345.67)</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="to-account">To Account</label>
+                                                <input type="text" id="to-account" placeholder="Enter recipient" readonly value="John Doe - ****9876">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="amount">Amount</label>
+                                                <input type="text" id="amount" placeholder="$0.00" readonly value="$500.00">
+                                            </div>
+                                            <div class="security-verification">
+                                                <div class="verification-step">
+                                                    <span class="step-icon">🛡️</span>
+                                                    <span class="step-text">Kernel: Transaction validated</span>
+                                                    <span class="step-status">✓</span>
+                                                </div>
+                                                <div class="verification-step">
+                                                    <span class="step-icon">🔐</span>
+                                                    <span class="step-text">HAL: Hardware security verified</span>
+                                                    <span class="step-status">✓</span>
+                                                </div>
+                                                <div class="verification-step">
+                                                    <span class="step-icon">⚡</span>
+                                                    <span class="step-text">Runtime: Memory protection active</span>
+                                                    <span class="step-status">✓</span>
+                                                </div>
+                                                <div class="verification-step">
+                                                    <span class="step-icon">📱</span>
+                                                    <span class="step-text">App: Encryption applied</span>
+                                                    <span class="step-status">✓</span>
+                                                </div>
+                                            </div>
+                                            <button class="banking-action-btn primary" data-action="confirm-transfer">
+                                                <span class="btn-icon">✅</span>
+                                                <span class="btn-text">Confirm Transfer</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- History Screen -->
+                                <div class="app-screen" id="history-screen">
+                                    <div class="app-header">
+                                        <button class="back-btn" data-target="dashboard-screen">← Back</button>
+                                        <h2 class="app-title">Transaction History</h2>
+                                    </div>
+                                    <div class="app-body">
+                                        <div class="transaction-list">
+                                            <div class="transaction-item">
+                                                <div class="transaction-icon">💸</div>
+                                                <div class="transaction-details">
+                                                    <div class="transaction-title">Transfer to John Doe</div>
+                                                    <div class="transaction-date">Today, 2:30 PM</div>
+                                                </div>
+                                                <div class="transaction-amount">-$500.00</div>
+                                            </div>
+                                            <div class="transaction-item">
+                                                <div class="transaction-icon">💰</div>
+                                                <div class="transaction-details">
+                                                    <div class="transaction-title">Salary Deposit</div>
+                                                    <div class="transaction-date">Yesterday, 9:00 AM</div>
+                                                </div>
+                                                <div class="transaction-amount">+$3,200.00</div>
+                                            </div>
+                                            <div class="transaction-item">
+                                                <div class="transaction-icon">🛒</div>
+                                                <div class="transaction-details">
+                                                    <div class="transaction-title">Online Purchase</div>
+                                                    <div class="transaction-date">Dec 15, 3:45 PM</div>
+                                                </div>
+                                                <div class="transaction-amount">-$89.99</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Security layer detail panel -->
+                            <div class="layer-detail-panel" id="layer-detail-panel">
+                                <div class="panel-header">
+                                    <h3 class="panel-title" id="panel-title">Security Layer Details</h3>
+                                    <button class="panel-close" id="panel-close" aria-label="Close panel">&times;</button>
+                                </div>
+                                <div class="panel-content" id="panel-content">
+                                    <!-- Dynamic content will be inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Context-sensitive help overlay -->
+                            <div class="help-overlay" id="help-overlay">
+                                <div class="help-content">
+                                    <div class="help-header">
+                                        <h3 class="help-title">Interactive Guide</h3>
+                                        <button class="help-close" id="help-close" aria-label="Close help">&times;</button>
+                                    </div>
+                                    <div class="help-body" id="help-body">
+                                        <!-- Dynamic help content -->
+                                    </div>
+                                    <div class="help-footer">
+                                        <button class="btn btn-secondary" id="help-prev">← Previous</button>
+                                        <span class="help-progress" id="help-progress">1 of 4</span>
+                                        <button class="btn btn-primary" id="help-next">Next →</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Remove the floating help button entirely -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Security Layers Information Panel (Right) -->
+            <div class="security-layers-info">
+                <div class="info-header">
+                    <h3>Security Layers</h3>
+                    <p>Click on active layers to learn more</p>
+                </div>
+                
+                <div class="layer-status-list">
+                    <div class="layer-status-item" data-layer="kernel">
+                        <div class="layer-status-icon">🛡️</div>
+                        <div class="layer-status-content">
+                            <h4>Kernel Security</h4>
+                            <p>Foundation layer providing process isolation</p>
+                            <div class="layer-status-indicator">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="layer-status-item" data-layer="hal">
+                        <div class="layer-status-icon">🔐</div>
+                        <div class="layer-status-content">
+                            <h4>Hardware Abstraction</h4>
+                            <p>Secures hardware communication</p>
+                            <div class="layer-status-indicator">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="layer-status-item" data-layer="runtime">
+                        <div class="layer-status-icon">⚡</div>
+                        <div class="layer-status-content">
+                            <h4>Runtime Security</h4>
+                            <p>Protects app execution and memory</p>
+                            <div class="layer-status-indicator">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="layer-status-item" data-layer="app">
+                        <div class="layer-status-icon">📱</div>
+                        <div class="layer-status-content">
+                            <h4>Application Security</h4>
+                            <p>App-level controls and data protection</p>
+                            <div class="layer-status-indicator">
+                                <span class="status-dot"></span>
+                                <span class="status-text">Inactive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </main>
+        
+
+    </div>
+    
+    <script src="scripts/interaction.js"></script>
+</body>
+</html>
