@@ -1,1 +1,0 @@
-{% gist bcb821feeeec9f3ef02dfc85ca6e5de5 %}
