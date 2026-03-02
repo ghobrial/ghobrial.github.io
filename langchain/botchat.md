@@ -1,1 +1,1 @@
-<script src="https://gist.github.com/ghobrial/bcb821feeeec9f3ef02dfc85ca6e5de5.js"></script>
+{% gist bcb821feeeec9f3ef02dfc85ca6e5de5 %}
