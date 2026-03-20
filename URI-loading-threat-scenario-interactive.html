@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URI Threat Detection - Interactive Scenario</title>
+    <style>
+        .container {
+            max-width: 700px;
+            margin: 20px auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 20px;
+        }
+
+        .scenario-header {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .instruction {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .uri-container {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .uri-part {
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .uri-part:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .uri-part.threat {
+            background: #dc3545;
+            animation: pulse 1s ease-in-out;
+        }
+
+        .uri-part.safe {
+            background: #28a745;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.threat {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .feedback.safe {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .progress {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .mitigation-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .reset-btn:hover {
+            background: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="scenario-header">
+            <h1>🕵️ URI Threat Detection Challenge</h1>
+            <p>A suspicious URI has been intercepted before it was loaded into a WebView. Click on each part to identify threats!</p>
+        </div>
+
+        <div class="instruction">
+            <strong>Your Mission:</strong> This URI appears to be from Amazon, but something's not right. Click on parts you think are threats (red) or safe (green). Find all 3 threats!
+        </div>
+
+        <div class="uri-container">
+            <span class="uri-part" role="button" tabindex="0" aria-label="Analyze HTTPS protocol" data-type="safe" data-info="HTTPS is a secure protocol for web communication">https://</span><span class="uri-part" role="button" tabindex="0" aria-label="Analyze secure subdomain" data-type="threat" data-info="Suspicious subdomain mimicking legitimate service!">secure-</span><span class="uri-part" role="button" tabindex="0" aria-label="Analyze amazom domain" data-type="threat" data-info="Typosquatting - mimics 'amazon.com' to fool users!">amazom</span><span class="uri-part" role="button" tabindex="0" aria-label="Analyze .com extension" data-type="safe" data-info="Standard .com domain extension">.com</span><span class="uri-part" role="button" tabindex="0" aria-label="Analyze login path" data-type="safe" data-info="Normal path structure for login pages">/login</span><span class="uri-part" role="button" tabindex="0" aria-label="Analyze redirect parameter" data-type="threat" data-info="Suspicious redirect parameter to steal credentials!">?redirect=http://malicious-site.tk</span><!--<span class="uri-part" role="button" tabindex="0" aria-label="Analyze token parameter" data-type="threat" data-info="Session hijacking attempt via malicious token!">&token=steal123</span>-->
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" aria-label="Threats found progress"></div>
+        </div>
+
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+
+        <button class="reset-btn" onclick="resetScenario()" aria-label="Reset challenge to start over">🔄 Reset Challenge</button>
+
+        <div class="mitigation-box" id="mitigationBox" aria-hidden="true">
+            <h3>🛡️ How to Prevent This Attack</h3>
+            <p><strong>URI Validation Requirements:</strong></p>
+            <ul>
+                <li><strong>Scheme:</strong> Always allow secure schemes (e.g. https://). Scrutinize other protocol usage. Other protocols include javascript://, content://, file://.</li>
+                <li><strong>Host:</strong> Validate against whitelist of trusted domains. Be careful of allowing arbitrary subdomains.</li>
+                <li><strong>Path:</strong> Sanitize and validate all path components.</li>
+                <li><strong>Parameters:</strong> User-provided code or scripts should never be allowed to run.</li>
+            </ul>
+            <p>Ensure all portions of the URI are validated and not just certain portions.</p>
+            <p><em>Result:</em> Credential theft via phishing and code execution are prevented!</p>
+        </div>
+    </div>
+
+    <script>
+        let threatsFound = 0;
+        const totalThreats = 3;
+
+        function handleUriClick(event) {
+            const part = event.target;
+            const type = part.dataset.type;
+            const info = part.dataset.info;
+            
+            if (part.classList.contains('threat') || part.classList.contains('safe')) {
+                return; // Already clicked
+            }
+
+            const feedback = document.getElementById('feedback');
+            
+            if (type === 'threat') {
+                part.classList.add('threat');
+                feedback.className = 'feedback threat';
+                feedback.innerHTML = `<strong>⚠️ Threat Detected!</strong><br>${info}`;
+                threatsFound++;
+            } else {
+                part.classList.add('safe');
+                feedback.className = 'feedback safe';
+                feedback.innerHTML = `<strong>✅ Safe Component</strong><br>${info}`;
+            }
+            
+            feedback.style.display = 'block';
+            updateProgress();
+            
+            if (threatsFound === totalThreats) {
+                setTimeout(() => {
+                    const mitigationBox = document.getElementById('mitigationBox');
+                    mitigationBox.style.display = 'block';
+                    mitigationBox.setAttribute('aria-hidden', 'false');
+                    feedback.innerHTML = '<strong>🎉 Challenge Complete!</strong><br>You identified all threats! See the mitigation strategies below.';
+                }, 1000);
+            }
+        }
+
+        function updateProgress() {
+            const progressBar = document.getElementById('progressBar');
+            const percentage = (threatsFound / totalThreats) * 100;
+            progressBar.style.width = percentage + '%';
+            progressBar.setAttribute('aria-valuenow', threatsFound);
+            if (percentage > 0) {
+                progressBar.textContent = `${threatsFound}/${totalThreats} Threats Found`;
+            } else {
+                progressBar.textContent = '';
+            }
+        }
+
+        function resetScenario() {
+            threatsFound = 0;
+            document.querySelectorAll('.uri-part').forEach(part => {
+                part.classList.remove('threat', 'safe');
+            });
+            document.getElementById('feedback').style.display = 'none';
+            const mitigationBox = document.getElementById('mitigationBox');
+            mitigationBox.style.display = 'none';
+            mitigationBox.setAttribute('aria-hidden', 'true');
+            updateProgress();
+        }
+
+        // Add click and keyboard listeners to URI parts
+        document.querySelectorAll('.uri-part').forEach(part => {
+            part.addEventListener('click', handleUriClick);
+            part.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handleUriClick(event);
+                }
+            });
+        });
+        
+        // Initialize progress bar
+        updateProgress();
+    </script>
+</body>
+</html>
